@@ -8,5 +8,6 @@ test("REST interface creates a visual story job", () => {
   if (!("error" in result)) {
     assert.equal(result.intent.format.ratio, "4:5");
     assert.ok(result.prompt.prompt.length > 40);
+    assert.equal(result.hostJob?.reservedFrame.status, "reserved");
   }
 });

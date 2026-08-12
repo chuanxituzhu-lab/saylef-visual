@@ -9,6 +9,8 @@ export function buildCodexInvocationPlan(
   prompt: ProviderPrompt,
   preferredProvider: HostInvocationPlan["preferredProvider"] = "auto"
 ): HostInvocationPlan {
+  const reservedPrompt: ProviderPrompt = { ...prompt, provider: "openai" };
+
   return {
     version: "host-invocation/1.0",
     executor: "host-agent",
@@ -17,6 +19,18 @@ export function buildCodexInvocationPlan(
     intent,
     prompt,
     guard,
+    reservedFrame: {
+      status: "reserved",
+      provider: "openai",
+      kind: "codex-image-generation",
+      label: "Codex 自动生成预留画面",
+      prompt: reservedPrompt,
+      instructions: {
+        invokeHostImageTool: true,
+        doNotClaimGeneratedUntilArtifactExists: true,
+        preserveAspectRatio: true
+      }
+    },
     instructions: {
       requireGuardPass: true,
       regenerateOnFailure: true,

@@ -8,6 +8,9 @@ test("host mode returns executable host invocation plan", () => {
   assert.ok(result.hostJob);
   assert.equal(result.hostJob?.capability, "image_generation");
   assert.equal(result.hostJob?.instructions.maxRetries, 1);
+  assert.equal(result.hostJob?.reservedFrame.status, "reserved");
+  assert.equal(result.hostJob?.reservedFrame.provider, "openai");
+  assert.equal(result.hostJob?.reservedFrame.instructions.invokeHostImageTool, true);
 });
 
 test("api mode remains reserved without credentials or network execution", () => {

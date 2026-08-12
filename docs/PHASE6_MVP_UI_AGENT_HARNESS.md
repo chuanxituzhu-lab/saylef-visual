@@ -9,8 +9,15 @@
 - CLI interface for Codex/Claude Code/other harnesses.
 - Agent operating contract in `agents/visual-story-agent/AGENT.md`.
 
+## New interaction features
+- One-click random generation for idea, season, emotion and ratio.
+- Emotion dropdown backed by the runtime's supported emotion vocabulary.
+- Codex/OpenAI reserved-frame preview with an explicit host image-generation handoff.
+
 ## Boundary
 The MVP core never stores API credentials. API clients remain a future adapter layer. Host mode is immediately usable by capable agents; provider APIs can be connected later without changing Visual Intent or Style DNA.
+
+The reserved frame is intentionally honest: it is a composition placeholder generated from the Visual Intent, while the host invocation plan tells Codex to call the available image tool. The UI must not claim an image was generated before an artifact is returned.
 
 ## Run
 ```bash

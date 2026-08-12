@@ -7,8 +7,32 @@ const randomButton = document.querySelector("#randomize");
 const copyButton = document.querySelector("#copy-prompt");
 const copyStatus = document.querySelector("#copy-status");
 const proFields = document.querySelector("#pro-fields");
+const domainCurrentBadge = document.querySelector("#domain-current-badge");
+const domainDescription = document.querySelector("#domain-description");
+const domainDirectoryList = document.querySelector("#domain-directory-list");
 const modeButtons = [...document.querySelectorAll("[data-mode]")];
 let currentPrompt = "";
+
+const domainCatalog = {
+  painting: {
+    label: "绘画",
+    description: "空间叙事、高纯度颜料与手工绘画质感。",
+    categories: [
+      { label: "创意核心", detail: "情绪 · 诗意 · 故事瞬间", target: "#field-creative-core" },
+      { label: "绘画方向", detail: "色彩 · 画幅 · 光线", target: "#field-format" },
+      { label: "绘画审美检查", detail: "Style Identity · Signature · Guard", target: "#field-guard" }
+    ]
+  },
+  photography: {
+    label: "摄影",
+    description: "真实光线、镜头参数与摄影审美检查。",
+    categories: [
+      { label: "创意核心", detail: "情绪 · 诗意 · 故事瞬间", target: "#field-creative-core" },
+      { label: "摄影方向", detail: "焦段 · 光圈 · ISO · 快门", target: "#pro-fields" },
+      { label: "摄影审美检查", detail: "Photography Critic · AI Trace", target: "#field-guard" }
+    ]
+  }
+};
 
 const randomIdeas = [
   "雨停以后，山路尽头的一盏灯还在等人",
@@ -26,6 +50,7 @@ const randomRatios = ["3:4", "4:5", "1:1", "9:16", "16:9"];
 
 modeButtons.forEach((button) => button.addEventListener("click", () => setMode(button.dataset.mode)));
 form.elements.domain.addEventListener("change", syncAccountForDomain);
+form.elements.domain.addEventListener("change", syncDomainDirectory);
 form.elements.ratio.addEventListener("change", syncPreviewRatio);
 randomButton.addEventListener("click", randomize);
 copyButton.addEventListener("click", async () => {
@@ -36,6 +61,7 @@ copyButton.addEventListener("click", async () => {
 });
 form.addEventListener("submit", (event) => { event.preventDefault(); generateStory(); });
 syncAccountForDomain();
+syncDomainDirectory();
 syncPreviewRatio();
 
 function setMode(mode = "simple") {
@@ -47,6 +73,34 @@ function setMode(mode = "simple") {
 
 function syncAccountForDomain() {
   form.elements.accountId.value = form.elements.domain.value === "photography" ? "account-b" : "account-a";
+}
+
+function syncDomainDirectory() {
+  const selectedDomain = domainCatalog[form.elements.domain.value] || domainCatalog.painting;
+  domainCurrentBadge.textContent = selectedDomain.label;
+  domainDescription.textContent = selectedDomain.description;
+  domainDirectoryList.replaceChildren();
+
+  selectedDomain.categories.forEach((category, index) => {
+    const item = document.createElement("li");
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "directory-item";
+    button.setAttribute("aria-label", `${category.label}：${category.detail}`);
+    button.innerHTML = '<span class="directory-index">0' + (index + 1) + '</span><span class="directory-copy"><strong></strong><small></small></span><span class="directory-arrow">↘</span>';
+    button.querySelector("strong").textContent = category.label;
+    button.querySelector("small").textContent = category.detail;
+    button.addEventListener("click", () => {
+      if (category.target === "#pro-fields" && proFields.hidden) setMode("pro");
+      const target = document.querySelector(category.target);
+      if (!target) return;
+      target.scrollIntoView({ behavior: "smooth", block: "center" });
+      target.classList.add("directory-focus");
+      window.setTimeout(() => target.classList.remove("directory-focus"), 900);
+    });
+    item.appendChild(button);
+    domainDirectoryList.appendChild(item);
+  });
 }
 
 function randomize() {

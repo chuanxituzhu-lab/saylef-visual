@@ -30,7 +30,7 @@ const server = http.createServer(async (req, res) => {
     }
 
     if (req.method === "GET" && req.url === "/api/health") {
-      return sendJson(res, 200, { status: "ok", phase: 6, mode: "host-first", apiProviders: "reserved" });
+      return sendJson(res, 200, { status: "ok", phase: 7, mode: "host-first", architecture: "one-core-two-domains-one-intelligence", apiProviders: "reserved" });
     }
 
     const requested = req.url === "/" ? "/index.html" : req.url || "/index.html";

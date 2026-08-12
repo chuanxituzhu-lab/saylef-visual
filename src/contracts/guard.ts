@@ -9,7 +9,11 @@ export type GuardIssue =
   | "style_drift"
   | "photography_drift"
   | "forbidden_image_text"
-  | "story_missing";
+  | "story_missing"
+  | "technical_qa_failed"
+  | "ai_trace_detected"
+  | "domain_quality_below_gate"
+  | "style_identity_below_gate";
 
 export interface GuardResult {
   passed: boolean;

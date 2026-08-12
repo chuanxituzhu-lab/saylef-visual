@@ -1,6 +1,8 @@
 import type { StoryContract } from "../contracts/story.js";
 import type { Ratio, VisualIntent } from "../contracts/visual-intent.js";
 import { VISUAL_INTENT_VERSION } from "../contracts/visual-intent.js";
+import type { DirectionSpec } from "../contracts/direction.js";
+import type { VisualDomain } from "../contracts/domain.js";
 import type { RandomSource } from "./random.js";
 
 const palettes = {
@@ -16,11 +18,29 @@ const heroBySpace: readonly string[] = [
   "a simple whitewashed mountain home"
 ];
 const entrances = ["a restrained winding stone path", "a short flight of weathered stone steps", "a narrow path entering from the foreground"] as const;
+const photographyHeroes = ["one person-sized gesture in a lived-in place", "a real surface holding the story moment", "one decisive human-scale subject"] as const;
 
-export function compileVisualIntent(story: StoryContract, ratio: Ratio, rng: RandomSource): VisualIntent {
+export interface VisualIntentCompilerOptions {
+  domain?: VisualDomain;
+  accountId?: string;
+  direction?: DirectionSpec;
+}
+
+export function compileVisualIntent(
+  story: StoryContract,
+  ratio: Ratio,
+  rng: RandomSource,
+  options: VisualIntentCompilerOptions = {}
+): VisualIntent {
+  const domain = options.domain ?? "painting";
   const palette = palettes[story.source.season];
+  const hero = domain === "photography" ? rng.pick(photographyHeroes) : rng.pick(heroBySpace);
+  const entrance = rng.pick(entrances);
   return {
     version: VISUAL_INTENT_VERSION,
+    domain,
+    ...(options.accountId ? { accountId: options.accountId } : {}),
+    ...(options.direction ? { direction: options.direction } : {}),
     time: story.source.timePoint,
     narrative: {
       title: story.title,
@@ -30,23 +50,28 @@ export function compileVisualIntent(story: StoryContract, ratio: Ratio, rng: Ran
       openEnding: true
     },
     scene: {
-      hero: rng.pick(heroBySpace),
-      entrance: rng.pick(entrances),
-      supportingElements: ["one monumental seasonal tree"]
+      hero,
+      entrance,
+      supportingElements: [domain === "photography" ? "one human-scale trace" : "one monumental seasonal tree"]
     },
     composition: {
       focalPoints: 1,
-      negativeSpace: 0.38,
+      negativeSpace: options.direction?.composition.negativeSpace ?? 0.38,
       visualNoise: "low",
-      depth: "immersive"
+      depth: options.direction?.composition.depth === "natural" ? "immersive" : "immersive"
     },
-    color: {
-      huePurity: "high",
-      saturation: "high",
-      brightness: "high",
-      ...palette
-    },
-    material: "watercolor_gouache_acrylic_impasto",
+    color: domain === "photography"
+      ? {
+          huePurity: "high",
+          saturation: "high",
+          brightness: "high",
+          base: "clear natural daylight",
+          primary: "fresh living green",
+          structure: "stable natural shadow",
+          accent: "one honest warm accent"
+        }
+      : { huePurity: "high", saturation: "high", brightness: "high", ...palette },
+    material: domain === "photography" ? "natural_light_documentary_capture" : "watercolor_gouache_acrylic_impasto",
     healing: {
       scenario: story.source.healingScenario,
       label: story.source.healingScenarioLabel,
@@ -62,8 +87,8 @@ export function compileVisualIntent(story: StoryContract, ratio: Ratio, rng: Ran
       material: "handcrafted_painterly"
     },
     rendering: {
-      spatialNarrativeWeight: 0.6,
-      pigmentLanguageWeight: 0.4,
+      spatialNarrativeWeight: options.direction?.spatialNarrativeWeight ?? 0.6,
+      pigmentLanguageWeight: options.direction?.pigmentLanguageWeight ?? 0.4,
       photographyDrift: "forbidden",
       imageText: "forbidden"
     },

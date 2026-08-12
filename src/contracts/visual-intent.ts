@@ -1,5 +1,7 @@
 import type { HealingScenarioId } from "./healing-scenario.js";
 import type { TimePointProfile } from "./time-point.js";
+import type { DirectionSpec } from "./direction.js";
+import type { VisualDomain } from "./domain.js";
 export const VISUAL_INTENT_VERSION = "visual-intent/1.0" as const;
 
 export type Ratio = "1:1" | "3:4" | "4:5" | "9:16" | "16:9";
@@ -12,14 +14,17 @@ export interface VisualLocks {
 }
 
 export interface RenderingPolicy {
-  spatialNarrativeWeight: 0.6;
-  pigmentLanguageWeight: 0.4;
+  spatialNarrativeWeight: number;
+  pigmentLanguageWeight: number;
   photographyDrift: "forbidden" | "allowed";
   imageText: "forbidden" | "allowed";
 }
 
 export interface VisualIntent {
   version: typeof VISUAL_INTENT_VERSION;
+  domain?: VisualDomain;
+  accountId?: string;
+  direction?: DirectionSpec;
   time: TimePointProfile;
   narrative: {
     title: string;
@@ -48,7 +53,7 @@ export interface VisualIntent {
     structure: string;
     accent: string;
   };
-  material: "watercolor_gouache_acrylic_impasto";
+  material: "watercolor_gouache_acrylic_impasto" | "natural_light_documentary_capture";
   healing: {
     scenario: HealingScenarioId;
     label: string;

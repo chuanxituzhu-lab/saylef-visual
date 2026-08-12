@@ -1,39 +1,51 @@
-# Visual Story Studio MVP
+# SAYLEF Visual
 
-A local-first AI Visual Storytelling Studio built around a frozen Visual Narrative System.
+SAYLEF Visual is a local-first AI-native visual creation and aesthetic intelligence engine.
 
-**Creative constitution:** high-saturation color, low-density content; bright light, low-stimulation composition; vivid life, quiet emotion.
+The architecture is frozen as:
+
+> One Creative Core + Two Visual Domains + One Visual Intelligence System
+
+The core never depends on a model provider. Painting and Photography are routed through Account DNA and Direction Engine profiles, then evaluated by the same quality pipeline.
 
 ## Current phase
-Phase 6: MVP Web UI + Agent Harness Integration.
+
+Phase 7: Creative Core Runtime + Account DNA + Direction Engine + Visual Intelligence.
+
+Implemented in this phase:
+
+- Creative Core brief with emotion, poetic context, story moment, visual hook and controlled serendipity.
+- Account DNA Runtime with independent Painting and Photography profiles.
+- Direction Engine with composition, color, light, material and optional camera controls.
+- Visual Intent routing for `painting` and `photography` without changing the provider contract.
+- Painting Critic: 境 · 气 · 章 · 色 · 笔 · 事 · 格.
+- Photography Critic: Impact, Story, Composition, Light, Color, Atmosphere, Originality and Technical.
+- Visual Intelligence: Technical QA, AI Trace, Domain Critic, Style Identity, Human Preference and Quality Gate.
+- Simple / Pro UI. Simple keeps the interface compact; Pro exposes camera direction fields for Photography.
+
+Painting remains locked to high hue purity, high saturation, high brightness, low visual noise and handcrafted pigment language. Photography remains locked to natural light, honest material, believable perspective and low AI trace. Neither domain may introduce text, logos, seals, signatures or watermarks into the artwork layer.
 
 ## Run
+
 ```bash
 npm install
 npm run build
 npm test
+npm run smoke
 npm start
 ```
-Then open `http://127.0.0.1:4173`.
+
+Open `http://127.0.0.1:4173`.
 
 ## Interfaces
-- Web UI
-- REST: `POST /api/create`
-- CLI: `npm run cli -- ...`
-- Agent harness: `runVisualStoryAgent()`
-- Codex host job: `HostInvocationPlan`
 
-The Web UI now includes one-click random generation for idea, season, emotion, healing scenario and ratio, plus emotion and healing-scenario selectors.
+- Web UI: Simple / Pro creation workbench.
+- REST: `POST /api/create`.
+- CLI: `npm run cli -- ...`.
+- Agent harness: `runVisualStoryAgent()`.
+- Codex host job: `HostInvocationPlan` with an honest reserved-frame handoff.
+- API provider adapters: reserved for later; no API key or network client is required by the core.
 
-Creation intent now includes seven explicit creative time points: dawn, early morning, around midday, afternoon, the golden hour before sunset, the blue hour after sunset, and the quiet hours after nightfall. The selected point is carried through Poetic Context, Visual Intent, the prompt compiler and the reserved-frame preview; automatic selection remains seed-reproducible.
+## Quality gates
 
-Host mode also returns a Codex/OpenAI reserved-frame handoff and renders an honest composition placeholder. It is not marked as generated until an image artifact exists.
-
-The visual guard now freezes four locks: one unresolved story moment, one hero with one entrance path and breathing space, a 60/40 cinematic-space to high-purity-pigment balance, and handcrafted painterly material. The image layer forbids text, Chinese or English characters, numbers, titles, calligraphy, seals, stamps, signatures, watermarks and logos. Photography drift, glossy 3D rendering and gray-green photographic gradients are rejected through the prompt policy and consistency guard.
-
-Healing scenarios are non-clinical creative moods such as 雨后归来、窗边慢呼吸、树荫停留、溪边停留、灯下守候、初雪庇护、新叶开始 and 天光放下. Each scenario controls the poetic context, restorative cue, story moment and provider prompt while preserving the locked Style DNA.
-
-Prompt language can be selected as pure Chinese or pure English. The compiler applies the same language to the negative prompt and removes repeated periods and ellipsis characters before the prompt reaches an image provider, preventing them from being interpreted as graphic marks or branding.
-
-## Provider strategy
-Host-first now. OpenAI/Gemini/Qwen API integration is reserved behind adapters for later and does not alter the core protocol.
+The runtime first applies the consistency guard, then evaluates Visual Intelligence. A candidate is accepted only when Technical QA, AI Trace, Domain Critic, Style Identity and Signature all pass the selected Account DNA thresholds.

@@ -82,10 +82,21 @@ export function compileBasePrompt(intent: VisualIntent, language: PromptLanguage
   const timeLightZh = chinese(intent.time.light, "第一束光落到安静的屋檐上");
   const timeLightEn = english(intent.time.lightEn, "the first light touches the quiet eaves");
   const negative = compileNegativePrompt(language);
+  const domainZh = intent.domain === "photography"
+    ? "视觉域：自然摄影。保留真实材质、自然光、人的尺度和决定性瞬间，不要假散景、高动态范围光晕或塑料质感。"
+    : "视觉域：高纯度手工绘画。颜色高饱和、高明度，空间安静，保留可见颜料和有意识的不完成。";
+  const domainEn = intent.domain === "photography"
+    ? "Domain: natural photography. Preserve real material, available light, human scale and a decisive instant. No fake bokeh, HDR halo or plastic finish."
+    : "Domain: high-purity handcrafted painting. Keep saturation and brightness high, the space quiet, with visible pigment and intentional incompleteness.";
+  const directionEn = intent.direction?.camera
+    ? "Camera direction: " + intent.direction.camera.focalLength + ", " + intent.direction.camera.aperture + ", " + intent.direction.camera.iso + ", " + intent.direction.camera.shutter + ", " + intent.direction.camera.angle + "."
+    : "Direction: one clear focal subject, one entrance path, natural light and restrained secondary detail.";
 
   if (language === "en") {
     return [
       "Create a " + ratio + " visual storytelling artwork. Metadata title: " + titleEn + ". Do not render the title in the image.",
+      domainEn,
+      directionEn,
       "Emotion: " + emotionEn + ". Story moment: " + momentEn + ".",
       "Time point: " + timeLabelEn + ". Light behavior: " + timeLightEn + ".",
       "Healing scene: " + scenarioEn + ". Restorative cue: " + cueEn + ". Keep the emotional support quiet, safe and non-clinical.",
@@ -93,14 +104,18 @@ export function compileBasePrompt(intent: VisualIntent, language: PromptLanguage
       "Hero subject: " + heroEn + ". Entrance into the image: " + entranceEn + ". Supporting element: " + supportEn(intent.scene.supportingElements) + ".",
       "Composition Lock: exactly one focal point, one clear entrance, immersive foreground-to-background depth, and about " + Math.round(intent.composition.negativeSpace * 100) + " percent breathing space.",
       "Color Lock: six parts cinematic spatial storytelling and four parts high-purity pigment language. Use warm ivory, deep charcoal, one vivid seasonal color and one clear accent. Use clean pigment steps instead of gray-green photographic gradients.",
-      "Material Lock: watercolor transparency, gouache opacity, acrylic impasto, restrained palette-knife texture, subtle bas-relief and visible handmade paint accumulation.",
-      "Mood: healing, serene, fresh and poetic. Cinematic in space and light but unmistakably painterly, never ordinary photography or glossy three-dimensional rendering.",
+      intent.domain === "photography"
+        ? "Capture Lock: natural light, honest material texture, believable perspective, controlled depth of field and one decisive human-scale instant."
+        : "Material Lock: watercolor transparency, gouache opacity, acrylic impasto, restrained palette-knife texture, subtle bas-relief and visible handmade paint accumulation.",
+      intent.domain === "photography"
+        ? "Mood: present, clear, fresh and human. Observational photography with real light, never staged spectacle or glossy CGI."
+        : "Mood: healing, serene, fresh and poetic. Cinematic in space and light but unmistakably painterly, never ordinary photography or glossy three-dimensional rendering.",
       "Image policy: no text, Chinese characters, English letters, numbers, title, caption, calligraphy, seal, stamp, signature, watermark or logo in the artwork layer. The title is metadata only.",
       "Negative prompt: " + negative + "."
     ].join(" ");
   }
 
-  return [
+  return [domainZh,
     "生成 " + ratio + " 的东方疗愈叙事画面。标题仅作为元数据：" + titleZh + "，不要把标题画入图像。",
     "情绪：" + emotionZh + "。故事时刻：" + momentZh + "。",
     "时间点：" + timeLabelZh + "。光线表现：" + timeLightZh + "。",

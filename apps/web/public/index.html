@@ -3,108 +3,85 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Visual Story Studio</title>
+  <title>SAYLEF Visual</title>
   <link rel="stylesheet" href="/styles.css" />
 </head>
 <body>
   <main class="shell">
-    <header>
+    <header class="topbar">
       <div>
-        <p class="eyebrow">VISUAL NARRATIVE SYSTEM · MVP v0.1</p>
-        <h1>Visual Story Studio</h1>
-        <p class="subtitle">以高亮纯色吸引眼睛，以一个瞬间讲故事，以中国诗意留下余韵。</p>
+        <p class="eyebrow">SAYLEF VISUAL · ONE CREATIVE CORE</p>
+        <h1>视觉导演工作台</h1>
+        <p class="subtitle">一个创作大脑，两套视觉语言，一个质量与审美智能系统。</p>
       </div>
-      <span class="badge">Host-first · Codex Frame Ready</span>
+      <div class="product-mark"><span class="mark-dot"></span><span>Host-first · v0.2 foundation</span></div>
     </header>
 
     <section class="workspace">
       <form id="creator" class="panel controls">
-        <h2>创作意图</h2>
-        <label>一句灵感<textarea name="userIdea" rows="4" placeholder="例如：秋天，一个关于等待的安静故事"></textarea></label>
+        <div class="panel-heading"><div><p class="section-kicker">CREATE</p><h2>创作意图</h2></div><span id="status" aria-live="polite">等待创作</span></div>
+
+        <label>一句话灵感<textarea name="userIdea" rows="4" placeholder="例如：雨停以后，山路尽头的一盏灯还在等人"></textarea></label>
+
+        <div class="mode-switch" role="group" aria-label="创作模式">
+          <button type="button" class="mode-button active" data-mode="simple">Simple · 自动导演</button>
+          <button type="button" class="mode-button" data-mode="pro">Pro · 展开控制</button>
+        </div>
+        <input type="hidden" name="mode" value="simple" />
+
+        <div class="grid2">
+          <label>视觉域<select name="domain"><option value="painting">绘画 · SAYLEF Painting World</option><option value="photography">摄影 · SAYLEF Photography World</option></select></label>
+          <label>账号 DNA<select name="accountId"><option value="account-a">Account A · 绘画世界</option><option value="account-b">Account B · 摄影世界</option></select></label>
+        </div>
         <div class="grid2">
           <label>疗愈情景<select name="healingScenario">
-            <option value="auto">自动选择</option>
-            <option value="rain-return">雨后归来</option>
-            <option value="window-breath">窗边慢呼吸</option>
-            <option value="tree-shade-rest">树荫停留</option>
-            <option value="stream-pause">溪边停留</option>
-            <option value="lamp-waiting">灯下守候</option>
-            <option value="snow-shelter">初雪庇护</option>
-            <option value="new-leaf-start">新叶开始</option>
-            <option value="open-sky-release">天光放下</option>
+            <option value="auto">自动选择</option><option value="rain-return">雨后归来</option><option value="window-breath">窗边慢呼吸</option><option value="tree-shade-rest">树荫停留</option><option value="stream-pause">溪边停留</option><option value="lamp-waiting">灯下守候</option><option value="snow-shelter">初雪庇护</option><option value="new-leaf-start">新叶开始</option><option value="open-sky-release">天光放下</option>
           </select></label>
+          <label>情绪<select name="emotionHint"><option value="">自动选择</option><option>等待</option><option>思念</option><option>归来</option><option>归属</option><option>安定</option><option>温暖</option><option>独处</option><option>新生</option><option>释然</option><option>守候</option><option>清凉</option></select></label>
         </div>
         <div class="grid2">
           <label>季节<select name="season"><option value="auto">自动</option><option value="spring">春</option><option value="summer">夏</option><option value="autumn">秋</option><option value="winter">冬</option></select></label>
           <label>画幅<select name="ratio"><option>3:4</option><option>4:5</option><option>1:1</option><option>9:16</option><option>16:9</option></select></label>
         </div>
-        <label>时间点<select name="timePoint">
-          <option value="auto">自动选择</option>
-          <option value="dawn">黎明前后 · 05:30–06:30</option>
-          <option value="morning">清晨 · 07:00–09:00</option>
-          <option value="midday">正午前后 · 11:30–13:00</option>
-          <option value="afternoon">午后 · 14:00–16:00</option>
-          <option value="golden-hour">日落前的金色时分 · 17:00–18:30</option>
-          <option value="blue-hour">日落后的蓝调时分 · 18:30–19:30</option>
-          <option value="night">入夜后的安静时分 · 20:00–22:00</option>
-        </select></label>
+        <label>创作时间点<select name="timePoint"><option value="auto">自动选择</option><option value="dawn">黎明前后</option><option value="morning">清晨</option><option value="midday">正午前后</option><option value="afternoon">午后</option><option value="golden-hour">日落前的金色时分</option><option value="blue-hour">日落后的蓝调时分</option><option value="night">入夜后的安静时分</option></select></label>
+
+        <fieldset id="pro-fields" class="pro-fields" hidden>
+          <legend>Pro Direction</legend>
+          <div class="grid2">
+            <label>焦段<input name="focalLength" value="50mm" /></label>
+            <label>光圈<input name="aperture" value="f/4" /></label>
+            <label>ISO<input name="iso" value="ISO 200" /></label>
+            <label>快门<input name="shutter" value="1/250s" /></label>
+          </div>
+          <p class="field-note">摄影模式会将这些参数写入 Direction Engine；绘画模式只保留叙事与材料控制。</p>
+        </fieldset>
+
         <div class="grid2">
-          <label>情绪<select name="emotionHint">
-            <option value="">自动选择</option>
-            <option value="等待">等待</option>
-            <option value="思念">思念</option>
-            <option value="归来">归来</option>
-            <option value="归属">归属</option>
-            <option value="安定">安定</option>
-            <option value="温暖">温暖</option>
-            <option value="独处">独处</option>
-            <option value="新生">新生</option>
-            <option value="释然">释然</option>
-            <option value="守候">守候</option>
-            <option value="清凉">清凉</option>
-          </select></label>
-         <label>目标模型<select name="provider"><option value="openai">OpenAI</option><option value="gemini">Gemini</option><option value="qwen">Qwen</option></select></label>
+          <label>目标 Provider<select name="provider"><option value="openai">OpenAI</option><option value="gemini">Gemini</option><option value="qwen">Qwen</option></select></label>
           <label>提示词语言<select name="promptLanguage"><option value="zh">纯中文</option><option value="en">纯英文</option></select></label>
         </div>
         <label>执行方式<select name="executionMode"><option value="host">Codex / Host Agent</option><option value="api">API（预留，不执行）</option></select></label>
-        <div class="button-row">
-          <button id="randomize" class="secondary" type="button">一键随机生成</button>
-          <button type="submit">生成视觉故事任务</button>
-        </div>
-        <p class="hint">随机按钮会同时生成灵感、季节、情绪和画幅。Host 模式会自动准备一张 Codex / OpenAI 预留画面，实际图像需由主机图像工具执行。</p>
-        <p class="hint">时间点采用七个固定创作时段，控制故事发生的光线、阴影和情绪，不改变核心 Style DNA。</p>
-       <p class="hint">Style Guard：画面层禁止任何文字、数字、印章、水印和 Logo；摄影化漂移与普通摄影风格不通过。</p>
-        <p class="hint">提示词语言会保持纯中文或纯英文，并自动清除连续句点与省略号，避免它们进入画面。</p>
+
+        <div class="button-row"><button id="randomize" class="secondary" type="button">一键随机导演</button><button type="submit">生成视觉任务</button></div>
+        <p class="hint">Simple 模式自动完成导演判断；Pro 模式额外开放 Direction 参数。当前 Host 模式会生成可交给 Codex 执行的任务与诚实的预留画面。</p>
       </form>
 
       <section class="panel story">
-        <div class="story-head"><h2>故事与画面</h2><span id="status" aria-live="polite">等待创作</span></div>
-        <div id="frame-card" class="frame-card" hidden>
-          <div class="frame-head"><div><p class="label">预留画面</p><h4 id="frame-title">Codex / OpenAI</h4></div><span id="frame-status" class="frame-status"></span></div>
-          <div id="frame-stage" class="frame-stage">
-            <div class="frame-light"></div>
-            <div class="frame-path"></div>
-            <div class="frame-copy"><strong id="frame-art-title"></strong><span id="frame-art-moment"></span></div>
-          </div>
-          <p id="frame-note" class="frame-note"></p>
-        </div>
-        <div id="empty" class="empty">输入一个感觉，或点击“一键随机生成”。</div>
+        <div class="panel-heading"><div><p class="section-kicker">DIRECTOR OUTPUT</p><h2>故事与画面</h2></div><span class="system-note">Guard · Critic · AI Trace</span></div>
+        <div id="empty" class="empty"><div><span class="empty-orb"></span><p>输入一句感觉，或点击“一键随机导演”。</p><small>系统会自动完成故事、构图、色彩、光线与质量门。</small></div></div>
         <div id="result" hidden>
-          <p class="label">标题</p><h3 id="title"></h3>
-         <p class="label">视觉钩子</p><p id="hook" class="hook"></p>
-          <p class="label">疗愈情景</p><p id="healing-scenario" class="hook healing-cue"></p>
-          <p class="label">创作时间点</p><p id="time-point" class="hook"></p>
-          <div class="story-grid">
-            <div><p class="label">情绪</p><p id="emotion"></p></div>
-            <div><p class="label">故事瞬间</p><p id="moment"></p></div>
-            <div><p class="label">主角</p><p id="hero"></p></div>
-            <div><p class="label">进入画面的入口</p><p id="entrance"></p></div>
-          </div>
-
+          <div class="result-top"><div><p class="label">作品标题</p><h3 id="title"></h3></div><span id="domain-badge" class="tag"></span></div>
+          <p class="label">视觉钩子</p><p id="hook" class="hook"></p>
+          <div class="story-meta"><span id="emotion"></span><span id="time-point"></span><span id="healing-scenario"></span></div>
+          <div class="story-grid"><div><p class="label">故事瞬间</p><p id="moment"></p></div><div><p class="label">主角</p><p id="hero"></p></div><div><p class="label">进入画面的入口</p><p id="entrance"></p></div><div><p class="label">Account DNA</p><p id="account"></p></div></div>
           <p class="label">色彩骨架</p><div id="palette" class="palette"></div>
-          <div class="prompt-head"><p class="label">Provider Prompt</p><div class="prompt-actions"><span id="copy-status" role="status"></span><button id="copy-prompt" class="copy-button" type="button" disabled>复制提示词</button></div></div>
-          <pre id="prompt"></pre>
-          <details><summary>Host Invocation Plan / Visual Intent</summary><pre id="job"></pre></details>
+
+          <section class="intelligence"><div class="intelligence-head"><div><p class="label">Visual Intelligence</p><h4 id="intelligence-score"></h4></div><span id="intelligence-decision" class="decision"></span></div><div id="gate" class="gate-grid"></div><div class="critic-row"><div><p class="label">Domain Critic</p><div id="critic-dimensions" class="critic-dimensions"></div></div><div><p class="label">AI Trace</p><p id="ai-trace"></p></div></div></section>
+
+          <div id="frame-card" class="frame-card" hidden><div class="frame-head"><div><p class="label">Host Reserved Frame</p><h4 id="frame-title">Codex / OpenAI</h4></div><span id="frame-status" class="frame-status"></span></div><div id="frame-stage" class="frame-stage"><div class="frame-light"></div><div class="frame-path"></div><div class="frame-copy"><strong id="frame-art-title"></strong><span id="frame-art-moment"></span></div></div><p id="frame-note" class="frame-note"></p></div>
+
+          <div class="prompt-head"><p class="label">Provider Prompt</p><div class="prompt-actions"><span id="copy-status" role="status"></span><button id="copy-prompt" class="copy-button" type="button" disabled>复制提示词</button></div></div><pre id="prompt"></pre>
+          <details><summary>展开 Host Invocation Plan / Visual Intent</summary><pre id="job"></pre></details>
         </div>
       </section>
     </section>

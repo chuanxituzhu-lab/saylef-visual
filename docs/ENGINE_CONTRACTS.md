@@ -1,16 +1,14 @@
-# Saylef Visual Engine Contracts
+# Engine Contracts v0.1
 
-This MVP keeps the frozen pipeline small:
+Frozen chain:
 
-```text
-CreationRequest
-  -> PoeticContext
-  -> StoryContract
-  -> VisualIntent v1.0
-  -> ConsistencyGuard
-  -> HostInvocationPlan
-```
+Poetic Context -> Story -> Style DNA -> Visual Intent Protocol -> Provider Adapter -> Consistency Guard
 
-`STYLE_DNA` is read-only. The core produces a provider-neutral `VisualIntent`; OpenAI, Gemini and Qwen remain reserved adapters, while the Codex host plan delegates execution to whatever image tool the host makes available.
+## Invariants
 
-The visual constraints are deliberately explicit: one emotion, one story, one moment, one hook, one focal point, low visual noise, generous negative space, high-purity/high-saturation/high-brightness color, and no gray pollution.
+- ONE EMOTION / ONE STORY / ONE MOMENT / ONE HOOK
+- Style DNA is read-only.
+- Provider adapters translate; they do not create narrative intent.
+- Visual Intent is provider-independent.
+- Consistency Guard allows at most one automatic retry in MVP.
+- New features must enter as plugins/data sources, not new core engines.

@@ -1,0 +1,45 @@
+import { VISUAL_INTENT_VERSION } from "../contracts/visual-intent.js";
+const palettes = {
+    spring: { base: "warm pure ivory", primary: "luminous spring green", structure: "deep charcoal", accent: "pure vermilion red" },
+    summer: { base: "warm pure ivory", primary: "brilliant emerald green", structure: "deep charcoal", accent: "clear cobalt blue" },
+    autumn: { base: "warm pure ivory", primary: "pure golden yellow", structure: "deep charcoal", accent: "pure vermilion red" },
+    winter: { base: "clean snow ivory", primary: "clear sky blue", structure: "deep charcoal", accent: "pure vermilion red" }
+};
+const heroBySpace = [
+    "a small ivory rural cottage",
+    "a solitary old tree beside a quiet dwelling",
+    "a simple whitewashed mountain home"
+];
+const entrances = ["a restrained winding stone path", "a short flight of weathered stone steps", "a narrow path entering from the foreground"];
+export function compileVisualIntent(story, ratio, rng) {
+    const palette = palettes[story.source.season];
+    return {
+        version: VISUAL_INTENT_VERSION,
+        narrative: {
+            title: story.title,
+            emotion: story.emotion,
+            moment: story.storyMoment,
+            hook: story.visualHook,
+            openEnding: true
+        },
+        scene: {
+            hero: rng.pick(heroBySpace),
+            entrance: rng.pick(entrances),
+            supportingElements: ["one monumental seasonal tree"]
+        },
+        composition: {
+            focalPoints: 1,
+            negativeSpace: 0.38,
+            visualNoise: "low",
+            depth: "immersive"
+        },
+        color: {
+            huePurity: "high",
+            saturation: "high",
+            brightness: "high",
+            ...palette
+        },
+        material: "watercolor_gouache_acrylic_impasto",
+        format: { ratio, recompose: true }
+    };
+}

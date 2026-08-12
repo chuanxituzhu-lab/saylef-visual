@@ -1,32 +1,27 @@
-# Saylef Visual
+# Visual Story Studio MVP
 
-Local-first MVP for turning a short feeling or idea into a structured visual story task.
+A local-first AI Visual Storytelling Studio built around a frozen Visual Narrative System.
 
-The core is intentionally small and frozen around:
+**Creative constitution:** high-saturation color, low-density content; bright light, low-stimulation composition; vivid life, quiet emotion.
 
-```text
-Poetic Context -> Story -> Visual Intent -> Consistency Guard -> Host Invocation Plan
-```
-
-The product owns the creative logic and style constraints. The host owns image-tool execution. OpenAI, Gemini and Qwen adapters are reserved at the prompt boundary; no API key is required by this MVP.
+## Current phase
+Phase 6: MVP Web UI + Agent Harness Integration.
 
 ## Run
-
-Requires Node.js 18 or newer.
-
-```powershell
-npm test
-npm run check
+```bash
+npm install
 npm run build
+npm test
 npm start
 ```
+Then open `http://127.0.0.1:4173`.
 
-Open `http://127.0.0.1:4173`.
+## Interfaces
+- Web UI
+- REST: `POST /api/create`
+- CLI: `npm run cli -- ...`
+- Agent harness: `runVisualStoryAgent()`
+- Codex host job: `HostInvocationPlan`
 
-## CLI
-
-```powershell
-node src/cli.mjs --season autumn --ratio 3:4 --idea "一个关于等待的安静故事"
-```
-
-The CLI and Web UI return the same `Visual Intent` structure. The current host plan is a verified handoff description; it does not pretend that a provider image was generated when no host image tool has run.
+## Provider strategy
+Host-first now. OpenAI/Gemini/Qwen API integration is reserved behind adapters for later and does not alter the core protocol.

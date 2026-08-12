@@ -1,0 +1,8 @@
+{
+  "defaultMode": "host",
+  "api": {
+    "openai": { "enabled": false, "apiKeyEnv": "OPENAI_API_KEY", "model": "" },
+    "gemini": { "enabled": false, "apiKeyEnv": "GEMINI_API_KEY", "model": "" },
+    "qwen": { "enabled": false, "apiKeyEnv": "DASHSCOPE_API_KEY", "model": "" }
+  }
+}

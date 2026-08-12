@@ -42,6 +42,8 @@ export function buildPoeticContext(input: PoeticContextInput, rng: RandomSource)
     poeticMood: `${season} · ${emotionSeed} · ${userIdea || rng.pick(bank.spaces)} · 留白未尽`,
     healingScenario: healing.id,
     healingScenarioLabel: healing.label,
-    healingCue: healing.cue
+    healingScenarioLabelEn: healing.labelEn,
+    healingCue: healing.cue,
+    healingCueEn: healing.cueEn
   };
 }

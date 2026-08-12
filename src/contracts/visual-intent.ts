@@ -50,7 +50,9 @@ export interface VisualIntent {
   healing: {
     scenario: HealingScenarioId;
     label: string;
+    labelEn: string;
     cue: string;
+    cueEn: string;
     tone: "restorative_non_clinical";
   };
   locks: VisualLocks;

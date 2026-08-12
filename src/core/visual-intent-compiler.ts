@@ -49,7 +49,9 @@ export function compileVisualIntent(story: StoryContract, ratio: Ratio, rng: Ran
     healing: {
       scenario: story.source.healingScenario,
       label: story.source.healingScenarioLabel,
+      labelEn: story.source.healingScenarioLabelEn,
       cue: story.source.healingCue,
+      cueEn: story.source.healingCueEn,
       tone: "restorative_non_clinical"
     },
     locks: {

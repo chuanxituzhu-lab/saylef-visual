@@ -1,22 +1,27 @@
-import type { ImageProvider, ImageResult, ProviderPrompt } from "../contracts/provider.js";
+import type { ImageProvider, ImageResult, PromptLanguage, ProviderPrompt } from "../contracts/provider.js";
 import type { VisualIntent } from "../contracts/visual-intent.js";
-import { compileBasePrompt, DEFAULT_NEGATIVE_PROMPT } from "../compiler-prompt.js";
+import { compileBasePrompt, compileNegativePrompt } from "../compiler-prompt.js";
 
 abstract class PromptOnlyProvider implements ImageProvider {
   abstract readonly id: string;
   protected suffix = "";
 
-  compile(intent: VisualIntent): ProviderPrompt {
+  compile(intent: VisualIntent, language: PromptLanguage = "zh"): ProviderPrompt {
     return {
       provider: this.id,
-      prompt: `${compileBasePrompt(intent)} ${this.suffix}`.trim(),
-      negativePrompt: DEFAULT_NEGATIVE_PROMPT,
+      language,
+      prompt: (compileBasePrompt(intent, language) + " " + this.suffixFor(language)).trim(),
+      negativePrompt: compileNegativePrompt(language),
       ratio: intent.format.ratio
     };
   }
 
+  protected suffixFor(language: PromptLanguage): string {
+    return language === "zh" ? "保持清晰的单一视觉层级。" : this.suffix;
+  }
+
   async generate(_prompt: ProviderPrompt): Promise<ImageResult> {
-    throw new Error(`${this.id} network generation is intentionally not wired in Phase 4. Inject a transport/API client in the provider integration phase.`);
+    throw new Error(this.id + " network generation is intentionally not wired in Phase 4. Inject a transport/API client in the provider integration phase.");
   }
 }
 

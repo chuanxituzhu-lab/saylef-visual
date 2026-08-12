@@ -14,6 +14,6 @@ export function createVisualStory(request: CreationRequest): RuntimeResult {
   const intent = compileVisualIntent(story, request.ratio ?? "3:4", rng);
   const guard = validateVisualIntent(intent, 1);
   const provider = getPromptAdapter(request.provider ?? "openai");
-  const prompt = provider.compile(intent);
+  const prompt = provider.compile(intent, request.promptLanguage ?? "zh");
   return { intent, guard, prompt, seed };
 }

@@ -31,5 +31,7 @@ The visual guard now freezes four locks: one unresolved story moment, one hero w
 
 Healing scenarios are non-clinical creative moods such as 雨后归来、窗边慢呼吸、树荫停留、溪边停留、灯下守候、初雪庇护、新叶开始 and 天光放下. Each scenario controls the poetic context, restorative cue, story moment and provider prompt while preserving the locked Style DNA.
 
+Prompt language can be selected as pure Chinese or pure English. The compiler applies the same language to the negative prompt and removes repeated periods and ellipsis characters before the prompt reaches an image provider, preventing them from being interpreted as graphic marks or branding.
+
 ## Provider strategy
 Host-first now. OpenAI/Gemini/Qwen API integration is reserved behind adapters for later and does not alter the core protocol.

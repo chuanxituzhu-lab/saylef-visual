@@ -33,7 +33,9 @@ export const autumnWaitingFixture: VisualIntent = {
   healing: {
     scenario: "rain-return",
     label: "雨后归来",
+    labelEn: "return after rain",
     cue: "让脚步慢下来，回到一个不必解释自己的地方",
+    cueEn: "slow your steps and return to a place where nothing needs to be explained",
     tone: "restorative_non_clinical"
   },
   locks: {

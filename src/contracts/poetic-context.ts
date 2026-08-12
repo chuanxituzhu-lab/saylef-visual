@@ -19,5 +19,7 @@ export interface PoeticContext {
   poeticMood: string;
   healingScenario: HealingScenarioId;
   healingScenarioLabel: string;
+  healingScenarioLabelEn: string;
   healingCue: string;
+  healingCueEn: string;
 }

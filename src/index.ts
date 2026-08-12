@@ -1,5 +1,6 @@
 export * from "./contracts/guard.js";
 export * from "./contracts/poetic-context.js";
+export * from "./contracts/time-point.js";
 export * from "./contracts/provider.js";
 export * from "./contracts/runtime.js";
 export * from "./contracts/story.js";

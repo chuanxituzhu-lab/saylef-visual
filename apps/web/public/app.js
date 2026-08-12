@@ -19,6 +19,7 @@ const randomIdeas = [
 const randomSeasons = ["spring", "summer", "autumn", "winter"];
 const randomEmotions = ["等待", "思念", "归来", "归属", "安定", "温暖", "独处", "新生", "释然", "守候", "清凉"];
 const randomHealingScenarios = ["rain-return", "window-breath", "tree-shade-rest", "stream-pause", "lamp-waiting", "snow-shelter", "new-leaf-start", "open-sky-release"];
+const randomTimePoints = ["dawn", "morning", "midday", "afternoon", "golden-hour", "blue-hour", "night"];
 const randomRatios = ["3:4", "4:5", "1:1", "9:16", "16:9"];
 
 form.addEventListener("submit", (event) => {
@@ -31,6 +32,7 @@ randomButton.addEventListener("click", () => {
   form.elements.season.value = pick(randomSeasons);
   form.elements.emotionHint.value = pick(randomEmotions);
   form.elements.healingScenario.value = pick(randomHealingScenarios);
+  form.elements.timePoint.value = pick(randomTimePoints);
   form.elements.ratio.value = pick(randomRatios);
   syncPreviewRatio();
   form.elements.provider.value = "openai";
@@ -64,6 +66,7 @@ async function generateStory() {
   const data = Object.fromEntries(new FormData(form));
   if (data.season === "auto") delete data.season;
   if (data.healingScenario === "auto") delete data.healingScenario;
+  if (data.timePoint === "auto") delete data.timePoint;
   if (!data.userIdea) delete data.userIdea;
   if (!data.emotionHint) delete data.emotionHint;
 
@@ -88,6 +91,7 @@ function renderResult(payload) {
   document.querySelector("#title").textContent = n.title;
   document.querySelector("#hook").textContent = n.hook;
   document.querySelector("#healing-scenario").textContent = payload.intent.healing.label + " · " + payload.intent.healing.cue;
+  document.querySelector("#time-point").textContent = payload.intent.time.label + " · " + payload.intent.time.clock + " · " + payload.intent.time.light;
   document.querySelector("#emotion").textContent = n.emotion;
   document.querySelector("#moment").textContent = n.moment;
   document.querySelector("#hero").textContent = payload.intent.scene.hero;

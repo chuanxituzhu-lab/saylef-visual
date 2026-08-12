@@ -1,5 +1,6 @@
 import type { PoeticContext, PoeticContextInput, Season } from "../contracts/poetic-context.js";
 import { resolveHealingScenario } from "./healing-scenarios.js";
+import { resolveTimePoint } from "../contracts/time-point.js";
 import type { RandomSource } from "./random.js";
 
 const SEASONS = ["spring", "summer", "autumn", "winter"] as const;
@@ -28,18 +29,20 @@ export function buildPoeticContext(input: PoeticContextInput, rng: RandomSource)
   const season: ConcreteSeason = input.season === "auto" ? rng.pick(SEASONS) : input.season;
   const bank = seasonal[season];
   const healing = resolveHealingScenario(input.healingScenario, rng);
+  const timePoint = resolveTimePoint(input.timePoint, rng);
   const emotionSeed = input.emotionHint?.trim() || rng.pick(healing.emotions.length ? healing.emotions : bank.emotions);
   const userIdea = input.userIdea?.trim();
 
   return {
     season,
-    time: rng.pick(healing.times.length ? healing.times : bank.times),
+    time: timePoint.label,
+    timePoint,
     weather: rng.pick(healing.weather.length ? healing.weather : bank.weather),
     space: userIdea || rng.pick(healing.spaces.length ? healing.spaces : bank.spaces),
     imagery: [rng.pick(healing.imagery), rng.pick(healing.imagery)].filter((v, i, a) => a.indexOf(v) === i),
     sound: rng.pick(healing.sounds.length ? healing.sounds : bank.sounds),
     emotionSeed,
-    poeticMood: `${season} · ${emotionSeed} · ${userIdea || rng.pick(bank.spaces)} · 留白未尽`,
+    poeticMood: `${season} · ${timePoint.label} · ${emotionSeed} · ${userIdea || rng.pick(bank.spaces)} · 留白未尽`,
     healingScenario: healing.id,
     healingScenarioLabel: healing.label,
     healingScenarioLabelEn: healing.labelEn,

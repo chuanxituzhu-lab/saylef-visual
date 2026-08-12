@@ -1,4 +1,5 @@
 import type { HealingScenarioId } from "./healing-scenario.js";
+import type { TimePointProfile } from "./time-point.js";
 export const VISUAL_INTENT_VERSION = "visual-intent/1.0" as const;
 
 export type Ratio = "1:1" | "3:4" | "4:5" | "9:16" | "16:9";
@@ -19,6 +20,7 @@ export interface RenderingPolicy {
 
 export interface VisualIntent {
   version: typeof VISUAL_INTENT_VERSION;
+  time: TimePointProfile;
   narrative: {
     title: string;
     emotion: string;

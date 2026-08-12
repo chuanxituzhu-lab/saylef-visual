@@ -38,6 +38,16 @@
           <label>季节<select name="season"><option value="auto">自动</option><option value="spring">春</option><option value="summer">夏</option><option value="autumn">秋</option><option value="winter">冬</option></select></label>
           <label>画幅<select name="ratio"><option>3:4</option><option>4:5</option><option>1:1</option><option>9:16</option><option>16:9</option></select></label>
         </div>
+        <label>时间点<select name="timePoint">
+          <option value="auto">自动选择</option>
+          <option value="dawn">黎明前后 · 05:30–06:30</option>
+          <option value="morning">清晨 · 07:00–09:00</option>
+          <option value="midday">正午前后 · 11:30–13:00</option>
+          <option value="afternoon">午后 · 14:00–16:00</option>
+          <option value="golden-hour">日落前的金色时分 · 17:00–18:30</option>
+          <option value="blue-hour">日落后的蓝调时分 · 18:30–19:30</option>
+          <option value="night">入夜后的安静时分 · 20:00–22:00</option>
+        </select></label>
         <div class="grid2">
           <label>情绪<select name="emotionHint">
             <option value="">自动选择</option>
@@ -62,6 +72,7 @@
           <button type="submit">生成视觉故事任务</button>
         </div>
         <p class="hint">随机按钮会同时生成灵感、季节、情绪和画幅。Host 模式会自动准备一张 Codex / OpenAI 预留画面，实际图像需由主机图像工具执行。</p>
+        <p class="hint">时间点采用七个固定创作时段，控制故事发生的光线、阴影和情绪，不改变核心 Style DNA。</p>
        <p class="hint">Style Guard：画面层禁止任何文字、数字、印章、水印和 Logo；摄影化漂移与普通摄影风格不通过。</p>
         <p class="hint">提示词语言会保持纯中文或纯英文，并自动清除连续句点与省略号，避免它们进入画面。</p>
       </form>
@@ -82,6 +93,7 @@
           <p class="label">标题</p><h3 id="title"></h3>
          <p class="label">视觉钩子</p><p id="hook" class="hook"></p>
           <p class="label">疗愈情景</p><p id="healing-scenario" class="hook healing-cue"></p>
+          <p class="label">创作时间点</p><p id="time-point" class="hook"></p>
           <div class="story-grid">
             <div><p class="label">情绪</p><p id="emotion"></p></div>
             <div><p class="label">故事瞬间</p><p id="moment"></p></div>

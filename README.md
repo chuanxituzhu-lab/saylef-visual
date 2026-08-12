@@ -25,6 +25,8 @@ Then open `http://127.0.0.1:4173`.
 
 The Web UI now includes one-click random generation for idea, season, emotion, healing scenario and ratio, plus emotion and healing-scenario selectors.
 
+Creation intent now includes seven explicit creative time points: dawn, early morning, around midday, afternoon, the golden hour before sunset, the blue hour after sunset, and the quiet hours after nightfall. The selected point is carried through Poetic Context, Visual Intent, the prompt compiler and the reserved-frame preview; automatic selection remains seed-reproducible.
+
 Host mode also returns a Codex/OpenAI reserved-frame handoff and renders an honest composition placeholder. It is not marked as generated until an image artifact exists.
 
 The visual guard now freezes four locks: one unresolved story moment, one hero with one entrance path and breathing space, a 60/40 cinematic-space to high-purity-pigment balance, and handcrafted painterly material. The image layer forbids text, Chinese or English characters, numbers, titles, calligraphy, seals, stamps, signatures, watermarks and logos. Photography drift, glossy 3D rendering and gray-green photographic gradients are rejected through the prompt policy and consistency guard.

@@ -21,6 +21,7 @@ export function compileVisualIntent(story: StoryContract, ratio: Ratio, rng: Ran
   const palette = palettes[story.source.season];
   return {
     version: VISUAL_INTENT_VERSION,
+    time: story.source.timePoint,
     narrative: {
       title: story.title,
       emotion: story.emotion,

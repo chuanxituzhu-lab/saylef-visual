@@ -77,12 +77,17 @@ export function compileBasePrompt(intent: VisualIntent, language: PromptLanguage
   const cueZh = chinese(intent.healing.cue, "让呼吸慢下来");
   const scenarioEn = english(intent.healing.labelEn, "quiet restoration");
   const cueEn = english(intent.healing.cueEn, "let the breathing slow down");
+  const timeLabelZh = chinese(intent.time.label, "清晨");
+  const timeLabelEn = english(intent.time.labelEn, "early morning");
+  const timeLightZh = chinese(intent.time.light, "第一束光落到安静的屋檐上");
+  const timeLightEn = english(intent.time.lightEn, "the first light touches the quiet eaves");
   const negative = compileNegativePrompt(language);
 
   if (language === "en") {
     return [
       "Create a " + ratio + " visual storytelling artwork. Metadata title: " + titleEn + ". Do not render the title in the image.",
       "Emotion: " + emotionEn + ". Story moment: " + momentEn + ".",
+      "Time point: " + timeLabelEn + ". Light behavior: " + timeLightEn + ".",
       "Healing scene: " + scenarioEn + ". Restorative cue: " + cueEn + ". Keep the emotional support quiet, safe and non-clinical.",
       "Visual hook: " + hookEn + ". Keep the ending unresolved and contemplative.",
       "Hero subject: " + heroEn + ". Entrance into the image: " + entranceEn + ". Supporting element: " + supportEn(intent.scene.supportingElements) + ".",
@@ -98,6 +103,7 @@ export function compileBasePrompt(intent: VisualIntent, language: PromptLanguage
   return [
     "生成 " + ratio + " 的东方疗愈叙事画面。标题仅作为元数据：" + titleZh + "，不要把标题画入图像。",
     "情绪：" + emotionZh + "。故事时刻：" + momentZh + "。",
+    "时间点：" + timeLabelZh + "。光线表现：" + timeLightZh + "。",
     "疗愈情景：" + scenarioZh + "。疗愈提示：" + cueZh + "。情绪支持保持安静、安全、非医疗化。",
     "视觉钩子：" + hookZh + "。结尾保持未完成，让画面留下余韵。",
     "主体：" + heroZh + "。进入路径：" + entranceZh + "。辅助元素：" + supportZh(intent.scene.supportingElements) + "。",

@@ -1,7 +1,9 @@
 import type { VisualIntent } from "../../src/contracts/visual-intent.js";
+import { TIME_POINTS } from "../../src/contracts/time-point.js";
 
 export const autumnWaitingFixture: VisualIntent = {
   version: "visual-intent/1.0",
+  time: TIME_POINTS.find((timePoint) => timePoint.id === "golden-hour")!,
   narrative: {
     title: "门还开着",
     emotion: "quiet_waiting",

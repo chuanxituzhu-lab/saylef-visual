@@ -52,3 +52,16 @@ test("prompt language stays pure and removes ellipsis", () => {
   assert.equal(/\.{2,}|\u2026/.test(english.prompt.prompt), false);
   assert.equal(/[\u3400-\u9fff]/.test(english.prompt.negativePrompt || ""), false);
 });
+
+test("selected time point becomes structured intent and prompt direction", () => {
+  const result = createVisualStory({
+    season: "summer",
+    timePoint: "golden-hour",
+    promptLanguage: "en",
+    seed: 23
+  });
+  assert.equal(result.intent.time.id, "golden-hour");
+  assert.equal(result.intent.time.clock, "17:00–18:30");
+  assert.match(result.prompt.prompt, /Time point: the golden hour before sunset/);
+  assert.match(result.prompt.prompt, /low golden light/i);
+});

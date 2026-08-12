@@ -1,3 +1,4 @@
+import type { HealingScenarioId } from "./healing-scenario.js";
 export const VISUAL_INTENT_VERSION = "visual-intent/1.0" as const;
 
 export type Ratio = "1:1" | "3:4" | "4:5" | "9:16" | "16:9";
@@ -46,6 +47,12 @@ export interface VisualIntent {
     accent: string;
   };
   material: "watercolor_gouache_acrylic_impasto";
+  healing: {
+    scenario: HealingScenarioId;
+    label: string;
+    cue: string;
+    tone: "restorative_non_clinical";
+  };
   locks: VisualLocks;
   rendering: RenderingPolicy;
   format: {

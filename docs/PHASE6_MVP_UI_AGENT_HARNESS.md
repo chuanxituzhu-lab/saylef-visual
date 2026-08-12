@@ -10,14 +10,17 @@
 - Agent operating contract in `agents/visual-story-agent/AGENT.md`.
 
 ## New interaction features
-- One-click random generation for idea, season, emotion and ratio.
+- One-click random generation for idea, season, emotion, healing scenario and ratio.
 - Emotion dropdown backed by the runtime's supported emotion vocabulary.
+- Healing-scenario dropdown backed by eight non-clinical restorative scene profiles.
 - Codex/OpenAI reserved-frame preview with an explicit host image-generation handoff.
 
 ## Boundary
 The MVP core never stores API credentials. API clients remain a future adapter layer. Host mode is immediately usable by capable agents; provider APIs can be connected later without changing Visual Intent or Style DNA.
 
 The reserved frame is intentionally honest: it is a composition placeholder generated from the Visual Intent, while the host invocation plan tells Codex to call the available image tool. The UI must not claim an image was generated before an artifact is returned.
+
+Healing scenarios are a controlled input to Poetic Context rather than a decorative UI label. They shape time, weather, space, imagery, sound, emotion seed and restorative cue, then flow through Story, Visual Intent and Provider Prompt.
 
 ## Run
 ```bash

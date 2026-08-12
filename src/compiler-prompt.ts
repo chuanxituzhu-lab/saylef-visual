@@ -4,7 +4,8 @@ export function compileBasePrompt(intent: VisualIntent): string {
   const support = intent.scene.supportingElements.join(", ");
   return [
     `Create a ${intent.format.ratio} visual storytelling artwork. Metadata title: "${intent.narrative.title}". Do not render the title in the image.`,
-    `Emotion: ${intent.narrative.emotion}. Story moment: ${intent.narrative.moment}.`,
+   `Emotion: ${intent.narrative.emotion}. Story moment: ${intent.narrative.moment}.`,
+    `Healing scene: ${intent.healing.label}. Restorative cue: ${intent.healing.cue}. Keep the emotional support quiet, safe and non-clinical.`,
     `Visual hook: ${intent.narrative.hook}. Keep the ending unresolved and contemplative.`,
     `Hero subject: ${intent.scene.hero}. Entrance into the image: ${intent.scene.entrance}. Supporting element: ${support}.`,
     `Composition: exactly one focal point, low visual noise, immersive depth, about ${Math.round(intent.composition.negativeSpace * 100)}% breathing/negative space.`,

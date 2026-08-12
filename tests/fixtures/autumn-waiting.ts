@@ -30,6 +30,12 @@ export const autumnWaitingFixture: VisualIntent = {
     accent: "vermilion red"
   },
   material: "watercolor_gouache_acrylic_impasto",
+  healing: {
+    scenario: "rain-return",
+    label: "雨后归来",
+    cue: "让脚步慢下来，回到一个不必解释自己的地方",
+    tone: "restorative_non_clinical"
+  },
   locks: {
     story: "one_unresolved_moment",
     composition: "one_hero_one_entrance_breathing_space",

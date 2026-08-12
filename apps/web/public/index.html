@@ -22,6 +22,19 @@
         <h2>创作意图</h2>
         <label>一句灵感<textarea name="userIdea" rows="4" placeholder="例如：秋天，一个关于等待的安静故事"></textarea></label>
         <div class="grid2">
+          <label>疗愈情景<select name="healingScenario">
+            <option value="auto">自动选择</option>
+            <option value="rain-return">雨后归来</option>
+            <option value="window-breath">窗边慢呼吸</option>
+            <option value="tree-shade-rest">树荫停留</option>
+            <option value="stream-pause">溪边停留</option>
+            <option value="lamp-waiting">灯下守候</option>
+            <option value="snow-shelter">初雪庇护</option>
+            <option value="new-leaf-start">新叶开始</option>
+            <option value="open-sky-release">天光放下</option>
+          </select></label>
+        </div>
+        <div class="grid2">
           <label>季节<select name="season"><option value="auto">自动</option><option value="spring">春</option><option value="summer">夏</option><option value="autumn">秋</option><option value="winter">冬</option></select></label>
           <label>画幅<select name="ratio"><option>3:4</option><option>4:5</option><option>1:1</option><option>9:16</option><option>16:9</option></select></label>
         </div>
@@ -65,7 +78,8 @@
         <div id="empty" class="empty">输入一个感觉，或点击“一键随机生成”。</div>
         <div id="result" hidden>
           <p class="label">标题</p><h3 id="title"></h3>
-          <p class="label">视觉钩子</p><p id="hook" class="hook"></p>
+         <p class="label">视觉钩子</p><p id="hook" class="hook"></p>
+          <p class="label">疗愈情景</p><p id="healing-scenario" class="hook healing-cue"></p>
           <div class="story-grid">
             <div><p class="label">情绪</p><p id="emotion"></p></div>
             <div><p class="label">故事瞬间</p><p id="moment"></p></div>

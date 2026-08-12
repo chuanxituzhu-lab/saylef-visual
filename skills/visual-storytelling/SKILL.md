@@ -17,6 +17,7 @@ Turn a short creative intent into one restrained, story-led image. The host agen
 - Use one emotion, one story, one moment, one visual hook.
 - Use Chinese classical poetic mood as semantic inspiration, not literal poem illustration.
 - Leave narrative space unresolved so the viewer can enter the image emotionally.
+- Treat healing scenarios as non-clinical restorative moods that shape time, space, sound, story and visual entrance.
 - Keep the image layer free of text, characters, numbers, titles, seals, signatures, watermarks and logos.
 - Combine cinematic spatial storytelling with high-purity pigment language; reject ordinary photography and glossy 3D drift.
 
@@ -46,6 +47,7 @@ Before generation, require:
 - no gray cast, vintage fading, muddy mixing, clutter, decorative overload or generic fantasy noise;
 - a visible story entrance such as a path, door, bridge, window, stream, light or gaze direction;
 - a story moment that feels just-before, during, or just-after something meaningful.
+- a restorative scene such as rain-after-return, window breathing, tree-shade rest, stream pause, lamp waiting, snow shelter, new-leaf start or open-sky release;
 - no text or graphic marks in the artwork layer;
 - clear painterly material language with no photography drift.
 

@@ -1,9 +1,11 @@
 export type Season = "auto" | "spring" | "summer" | "autumn" | "winter";
+import type { HealingScenarioId, HealingScenarioSelection } from "./healing-scenario.js";
 
 export interface PoeticContextInput {
   season: Season;
   emotionHint?: string;
   userIdea?: string;
+  healingScenario?: HealingScenarioSelection;
 }
 
 export interface PoeticContext {
@@ -15,4 +17,7 @@ export interface PoeticContext {
   sound?: string;
   emotionSeed: string;
   poeticMood: string;
+  healingScenario: HealingScenarioId;
+  healingScenarioLabel: string;
+  healingCue: string;
 }

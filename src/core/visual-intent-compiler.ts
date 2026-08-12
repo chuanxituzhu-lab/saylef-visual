@@ -46,6 +46,12 @@ export function compileVisualIntent(story: StoryContract, ratio: Ratio, rng: Ran
       ...palette
     },
     material: "watercolor_gouache_acrylic_impasto",
+    healing: {
+      scenario: story.source.healingScenario,
+      label: story.source.healingScenarioLabel,
+      cue: story.source.healingCue,
+      tone: "restorative_non_clinical"
+    },
     locks: {
       story: "one_unresolved_moment",
       composition: "one_hero_one_entrance_breathing_space",

@@ -12,6 +12,7 @@ test("runtime creates a guarded reproducible story prompt", () => {
   assert.match(a.prompt.prompt, /very high saturation/i);
   assert.equal(a.intent.composition.focalPoints, 1);
   assert.ok(a.intent.composition.negativeSpace >= 0.3);
+  assert.equal(a.intent.healing.tone, "restorative_non_clinical");
 });
 
 test("different seeds create controlled variation without style drift", () => {
@@ -22,4 +23,18 @@ test("different seeds create controlled variation without style drift", () => {
   assert.equal(a.intent.composition.visualNoise, "low");
   assert.equal(b.intent.composition.visualNoise, "low");
   assert.notDeepEqual(a.intent, b.intent);
+});
+
+test("healing scenario shapes the poetic context and prompt", () => {
+  const result = createVisualStory({
+    season: "autumn",
+    healingScenario: "rain-return",
+    provider: "openai",
+    seed: 19
+  });
+  assert.equal(result.intent.healing.scenario, "rain-return");
+  assert.equal(result.intent.healing.label, "雨后归来");
+  assert.match(result.prompt.prompt, /Healing scene: 雨后归来/);
+  assert.match(result.prompt.prompt, /non-clinical/);
+  assert.equal(result.guard.passed, true);
 });

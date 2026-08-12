@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Visual Story Studio</title>
+  <link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <header>
+      <div>
+        <p class="eyebrow">VISUAL NARRATIVE SYSTEM · MVP v0.1</p>
+        <h1>Visual Story Studio</h1>
+        <p class="subtitle">以高亮纯色吸引眼睛，以一个瞬间讲故事，以中国诗意留下余韵。</p>
+      </div>
+      <span class="badge">Host-first · Codex Frame Ready</span>
+    </header>
+
+    <section class="workspace">
+      <form id="creator" class="panel controls">
+        <h2>创作意图</h2>
+        <label>一句灵感<textarea name="userIdea" rows="4" placeholder="例如：秋天，一个关于等待的安静故事"></textarea></label>
+        <div class="grid2">
+          <label>季节<select name="season"><option value="auto">自动</option><option value="spring">春</option><option value="summer">夏</option><option value="autumn">秋</option><option value="winter">冬</option></select></label>
+          <label>画幅<select name="ratio"><option>3:4</option><option>4:5</option><option>1:1</option><option>9:16</option><option>16:9</option></select></label>
+        </div>
+        <div class="grid2">
+          <label>情绪<select name="emotionHint">
+            <option value="">自动选择</option>
+            <option value="等待">等待</option>
+            <option value="思念">思念</option>
+            <option value="归来">归来</option>
+            <option value="归属">归属</option>
+            <option value="安定">安定</option>
+            <option value="温暖">温暖</option>
+            <option value="独处">独处</option>
+            <option value="新生">新生</option>
+            <option value="释然">释然</option>
+            <option value="守候">守候</option>
+            <option value="清凉">清凉</option>
+          </select></label>
+          <label>目标模型<select name="provider"><option value="openai">OpenAI</option><option value="gemini">Gemini</option><option value="qwen">Qwen</option></select></label>
+        </div>
+        <label>执行方式<select name="executionMode"><option value="host">Codex / Host Agent</option><option value="api">API（预留，不执行）</option></select></label>
+        <div class="button-row">
+          <button id="randomize" class="secondary" type="button">一键随机生成</button>
+          <button type="submit">生成视觉故事任务</button>
+        </div>
+        <p class="hint">随机按钮会同时生成灵感、季节、情绪和画幅。Host 模式会自动准备一张 Codex / OpenAI 预留画面，实际图像需由主机图像工具执行。</p>
+        <p class="hint">Style Guard：画面层禁止任何文字、数字、印章、水印和 Logo；摄影化漂移与普通摄影风格不通过。</p>
+      </form>
+
+      <section class="panel story">
+        <div class="story-head"><h2>故事与画面</h2><span id="status" aria-live="polite">等待创作</span></div>
+        <div id="frame-card" class="frame-card" hidden>
+          <div class="frame-head"><div><p class="label">预留画面</p><h4 id="frame-title">Codex / OpenAI</h4></div><span id="frame-status" class="frame-status"></span></div>
+          <div id="frame-stage" class="frame-stage">
+            <div class="frame-light"></div>
+            <div class="frame-path"></div>
+            <div class="frame-copy"><strong id="frame-art-title"></strong><span id="frame-art-moment"></span></div>
+          </div>
+          <p id="frame-note" class="frame-note"></p>
+        </div>
+        <div id="empty" class="empty">输入一个感觉，或点击“一键随机生成”。</div>
+        <div id="result" hidden>
+          <p class="label">标题</p><h3 id="title"></h3>
+          <p class="label">视觉钩子</p><p id="hook" class="hook"></p>
+          <div class="story-grid">
+            <div><p class="label">情绪</p><p id="emotion"></p></div>
+            <div><p class="label">故事瞬间</p><p id="moment"></p></div>
+            <div><p class="label">主角</p><p id="hero"></p></div>
+            <div><p class="label">进入画面的入口</p><p id="entrance"></p></div>
+          </div>
+
+          <p class="label">色彩骨架</p><div id="palette" class="palette"></div>
+          <div class="prompt-head"><p class="label">Provider Prompt</p><div class="prompt-actions"><span id="copy-status" role="status"></span><button id="copy-prompt" class="copy-button" type="button" disabled>复制提示词</button></div></div>
+          <pre id="prompt"></pre>
+          <details><summary>Host Invocation Plan / Visual Intent</summary><pre id="job"></pre></details>
+        </div>
+      </section>
+    </section>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

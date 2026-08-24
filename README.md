@@ -1,5 +1,7 @@
 # Saylef Visual
 
+![Saylef Visual — a quiet visual story in a golden mountain village](docs/assets/saylef-visual-hero.png)
+
 Local-first MVP for turning a short feeling or idea into a structured visual story task.
 
 The core is intentionally small and frozen around:

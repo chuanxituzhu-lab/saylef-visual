@@ -68,3 +68,35 @@ test('host plan delegates image execution to the host', () => {
   assert.equal(plan.image_tool_required, true);
   assert.equal(plan.prompt.provider, 'codex-host');
 });
+
+test('provider prompt supports Chinese and English output', () => {
+  const job = runVisualStoryAgent({ season: 'autumn' });
+  const zh = compileProviderPrompt(job.visual_intent, 'codex-host', 'zh');
+  const en = compileProviderPrompt(job.visual_intent, 'codex-host', 'en');
+  assert.match(zh.prompt, /视觉意图/);
+  assert.match(en.prompt, /Visual Intent/);
+  assert.equal(zh.language, 'zh');
+  assert.equal(en.language, 'en');
+});
+
+test('English jobs contain an English story and prompt', () => {
+  const job = runVisualStoryAgent({ season: 'autumn', language: 'en' });
+  assert.equal(job.story.title, 'The Door Is Still Open');
+  assert.match(job.story.micro_story, /rain stopped/);
+  assert.match(job.host_invocation_plan.prompt.prompt, /Visual Intent/);
+  assert.doesNotMatch(job.host_invocation_plan.prompt.prompt, /视觉意图|门还开着/);
+});
+
+test('Chinese jobs localize scene terms in the prompt', () => {
+  const job = runVisualStoryAgent({ season: 'winter', language: 'zh' });
+  assert.match(job.host_invocation_plan.prompt.prompt, /视觉意图/);
+  assert.match(job.host_invocation_plan.prompt.prompt, /一扇透出暖光的象牙白小屋窗户/);
+  assert.doesNotMatch(job.host_invocation_plan.prompt.prompt, /one warm-lit ivory cottage window/);
+});
+
+test('selected emotion is carried into localized prompts', () => {
+  const zh = runVisualStoryAgent({ season: 'summer', language: 'zh', emotion_hint: 'quiet tenderness' });
+  const en = runVisualStoryAgent({ season: 'summer', language: 'en', emotion_hint: 'quiet tenderness' });
+  assert.match(zh.host_invocation_plan.prompt.prompt, /核心情绪：安静的温柔/);
+  assert.match(en.host_invocation_plan.prompt.prompt, /Emotion: quiet tenderness/);
+});

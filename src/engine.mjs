@@ -105,6 +105,35 @@ const STORIES = {
   }
 };
 
+const STORIES_EN = {
+  spring: { title: 'Before the Flowers Open', emotion: 'hopeful waiting', micro_story: 'The tree by the door has not bloomed, but someone has already moved the little table into the sunlight.', story_moment: 'The first new leaf casts light onto an empty chair', visual_hook: 'An empty chair facing a newly budding tree', unresolved_question: 'Who will return first?' },
+  summer: { title: 'A Home Beneath the Shade', emotion: 'quiet belonging', micro_story: 'The afternoon heat has retreated beyond the valley. The door stays open, and no one inside is rushing you.', story_moment: 'A cool beam of light settles on the stone step inside the door', visual_hook: 'A single half-open vermilion door beneath an enormous emerald canopy', unresolved_question: 'Who is the door waiting for?' },
+  autumn: { title: 'The Door Is Still Open', emotion: 'quiet waiting', micro_story: 'The rain stopped long ago, yet the door has never closed.', story_moment: 'The last sunlight reaches the wet stone steps for the first time', visual_hook: 'A single vermilion door amid a mountain of gold', unresolved_question: 'Who is it waiting for?' },
+  winter: { title: 'The Light Is Still On', emotion: 'warm guardianship', micro_story: 'After the village falls asleep, one light across the river still keeps a place for someone.', story_moment: 'Footprints in the snow stop before the only glowing window', visual_hook: 'Only one window glows warm in the entire snow-white village', unresolved_question: 'Will the light wait until dawn?' }
+};
+
+const ZH_TERMS = new Map([
+  ['one warm-lit ivory cottage window', '一扇透出暖光的象牙白小屋窗户'],
+  ['one quiet ivory cottage', '一座安静的象牙白小屋'],
+  ['snow path leading to the window', '一条通向窗户的雪径'],
+  ['simple stone path leading into the scene', '一条引入画面的简洁石径'],
+  ['fresh green', '鲜绿色'], ['peach pink', '桃粉色'], ['vermilion', '朱红色'],
+  ['vivid green', '明翠绿'], ['lake blue', '湖蓝色'], ['pure golden yellow', '纯金黄色'],
+  ['bright orange', '明橙色'], ['cobalt blue', '钴蓝色'], ['snow white', '雪白色'],
+  ['sky blue', '天蓝色'], ['deep charcoal', '深炭黑色'], ['warm ivory', '暖象牙白'],
+  ['deep charcoal black', '稳定深炭黑'], ['healing', '治愈'], ['serenity', '宁静'],
+  ['freshness', '清新'], ['hopeful waiting', '充满希望的等待'],
+  ['quiet belonging', '安静的归属感'], ['quiet waiting', '安静的等待'],
+  ['warm guardianship', '温暖的守候'], ['new beginning', '新的开始'],
+  ['cool serenity', '清凉宁静'], ['quiet joy', '安静的喜悦'],
+  ['quiet longing', '安静的思念'], ['quiet solitude', '安静的独处'],
+  ['quiet tenderness', '安静的温柔'], ['quiet anticipation', '安静的期待'],
+  ['quiet courage', '安静的勇气'], ['quiet reunion', '安静的重逢'],
+  ['quiet farewell', '安静的告别'], ['healing serenity', '治愈的宁静']
+]);
+
+const localizeTerm = (value, language) => language === 'zh' ? (ZH_TERMS.get(value) || value) : value;
+
 const hashSeed = (value) => {
   let hash = 2166136261;
   for (const char of String(value)) {
@@ -139,17 +168,19 @@ export function createPoeticContext(request = {}) {
   };
 }
 
-export function createStory(context) {
-  const story = STORIES[context.season];
+export function createStory(context, language = 'zh') {
+  const story = (language === 'en' ? STORIES_EN : STORIES)[context.season];
   return {
     version: 'story/1.0',
     ...story,
-    emotion: context.emotion_seed
+    emotion: context.emotion_seed,
+    language: language === 'en' ? 'en' : 'zh'
   };
 }
 
 export function compileVisualIntent({ request = {}, context, story }) {
   const ratio = request.ratio || '3:4';
+  const language = story.language || 'zh';
   return {
     version: 'visual-intent/1.0',
     style_dna: STYLE_DNA.version,
@@ -163,8 +194,8 @@ export function compileVisualIntent({ request = {}, context, story }) {
     },
     poetic_context: context,
     scene: {
-      hero: context.season === 'winter' ? 'one warm-lit ivory cottage window' : 'one quiet ivory cottage',
-      entrance: context.season === 'winter' ? 'snow path leading to the window' : 'simple stone path leading into the scene',
+      hero: localizeTerm(context.season === 'winter' ? 'one warm-lit ivory cottage window' : 'one quiet ivory cottage', language),
+      entrance: localizeTerm(context.season === 'winter' ? 'snow path leading to the window' : 'simple stone path leading into the scene', language),
       supporting_elements: context.imagery.slice(0, 2)
     },
     composition: {
@@ -207,35 +238,51 @@ export function validateVisualIntent(intent) {
   };
 }
 
-export function compileProviderPrompt(intent, provider = 'codex-host') {
-  const prompt = [
+export function compileProviderPrompt(intent, provider = 'codex-host', language = 'en') {
+  const isEnglish = language === 'en';
+  const term = (value) => localizeTerm(value, isEnglish ? 'en' : 'zh');
+  const prompt = (isEnglish ? [
     `Visual Intent ${intent.version}.`,
     `Create one ${intent.format.ratio} visual story titled “${intent.narrative.title}”.`,
+    `Emotion: ${intent.narrative.emotion}.`,
     `Moment: ${intent.narrative.moment}.`,
     `Visual hook: ${intent.narrative.hook}.`,
     `Hero: ${intent.scene.hero}. Entrance: ${intent.scene.entrance}.`,
     `Use ${intent.color.primary}, ${intent.color.base}, ${intent.color.structure}, and one ${intent.color.accent} accent.`,
     'High-purity, high-saturation, luminous pigments; quiet composition; generous negative space; one focal point.',
     'Watercolor, gouache, acrylic impasto, palette-knife marks, subtle bas-relief texture; not photography.'
-  ].join(' ');
+  ] : [
+    `视觉意图 ${intent.version}。`,
+    `创作一幅比例为 ${intent.format.ratio}、标题为《${intent.narrative.title}》的视觉故事。`,
+    `核心情绪：${term(intent.narrative.emotion)}。`,
+    `故事瞬间：${intent.narrative.moment}。`,
+    `视觉钩子：${intent.narrative.hook}。`,
+    `主体：${intent.scene.hero}。引导路径：${intent.scene.entrance}。`,
+    `使用 ${term(intent.color.primary)}、${term(intent.color.base)}、${term(intent.color.structure)}，并以 ${term(intent.color.accent)} 作为唯一强调色。`,
+    '高纯度、高饱和、明亮通透的颜料；安静构图；充足留白；单一视觉焦点。',
+    '水彩、水粉、丙烯厚涂、刮刀笔触与轻微浮雕质感；非摄影写实。'
+  ]).join(' ');
   return {
     provider,
+    language: isEnglish ? 'en' : 'zh',
     prompt,
-    negative_prompt: 'gray pollution, muddy colors, low saturation, vintage fade, clutter, multiple focal points, decorative overload, photorealism',
+    negative_prompt: isEnglish
+      ? 'gray pollution, muddy colors, low saturation, vintage fade, clutter, multiple focal points, decorative overload, photorealism'
+      : '灰色污染、脏浊颜色、低饱和度、复古褪色、杂乱、多重视觉焦点、装饰过度、照片写实',
     ratio: intent.format.ratio,
     reserved: provider !== 'codex-host'
   };
 }
 
-export function createHostInvocationPlan(intent, provider = 'codex-host') {
+export function createHostInvocationPlan(intent, provider = 'codex-host', language = 'en') {
   return {
     kind: 'host-invocation-plan/1.0',
     provider,
     status: 'ready',
     execution: 'host-managed',
     image_tool_required: true,
-    prompt: compileProviderPrompt(intent, provider),
-    note: 'The host decides which available image generation tool executes this plan.'
+    prompt: compileProviderPrompt(intent, provider, language),
+    note: language === 'en' ? 'The host decides which available image generation tool executes this plan.' : '由宿主选择可用的图片生成工具执行此计划。'
   };
 }
 
@@ -246,10 +293,11 @@ export function runVisualStoryAgent(input = {}) {
     user_idea: input.user_idea || '一个安静而有余韵的视觉故事',
     ratio: input.ratio || '3:4',
     provider: input.provider || 'codex-host',
+    language: input.language === 'en' ? 'en' : 'zh',
     seed: input.seed ?? 42
   };
   const poetic_context = createPoeticContext(request);
-  const story = createStory(poetic_context);
+  const story = createStory(poetic_context, request.language);
   const visual_intent = compileVisualIntent({ request, context: poetic_context, story });
   const guard = validateVisualIntent(visual_intent);
   return {
@@ -258,7 +306,7 @@ export function runVisualStoryAgent(input = {}) {
     story,
     visual_intent,
     guard,
-    host_invocation_plan: guard.passed ? createHostInvocationPlan(visual_intent, request.provider) : null
+    host_invocation_plan: guard.passed ? createHostInvocationPlan(visual_intent, request.provider, request.language) : null
   };
 }
 

@@ -1,6 +1,6 @@
 # SAYLEF Visual
 
-![SAYLEF Visual — Visual Director Workbench](docs/assets/saylef-visual-director-hero.png)
+![SAYLEF Visual — Visual Director Workbench](docs/assets/saylef-visual-readme-cover.png)
 
 > Visual Director Workbench: One Creative Core routes one story through two visual domains, while Visual Intelligence protects composition, color, material and style identity.
 

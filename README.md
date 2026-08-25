@@ -1,8 +1,8 @@
-# SAYLEF Visual
+# SAYLEF VISUAL · 视觉导演工作台
 
 ![SAYLEF Visual — Visual Director Workbench](docs/assets/saylef-visual-readme-cover.png)
 
-> Visual Director Workbench: One Creative Core routes one story through two visual domains, while Visual Intelligence protects composition, color, material and style identity.
+> 让感觉进入画面。One Creative Core routes one story through two visual domains, while Visual Intelligence protects composition, color, material and style identity.
 
 saylef-visual is a local-first AI-native visual creation and aesthetic intelligence engine.
 
@@ -10,14 +10,22 @@ The architecture is frozen as:
 
 > One Creative Core + Two Visual Domains + One Visual Intelligence System
 
+Brand lockup:
+
+- Logo title: `SAYLEF VISUAL`
+- Product descriptor: `视觉导演工作台` · `Visual Director Workbench`
+- Core tagline: `让感觉进入画面`
+- Brand structure: `One Creative Core · Two Visual Worlds`
+
 The core never depends on a model provider. Painting and Photography are routed through Account DNA and Direction Engine profiles, then evaluated by the same quality pipeline.
 
-## Current release · v0.2.0
+## Current release · v0.2.1
 
 This is the current development baseline for the Visual Director Workbench.
 
 Core release notes:
 
+- Brand lockup is now aligned across the Web UI and README: `SAYLEF VISUAL`, `视觉导演工作台` and `让感觉进入画面`.
 - One Creative Core turns a short feeling into a story moment, visual hook, composition, color, light and material direction.
 - Painting and Photography use separate Account DNA profiles while sharing one Visual Intelligence quality pipeline.
 - Healing scenarios, explicit time points, pure Chinese or pure English prompts, no-text image rules, Style Drift Guard and Codex reserved-frame handoff are included.

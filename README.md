@@ -1,34 +1,51 @@
-# Saylef Visual
+# SAYLEF Visual
 
-![Saylef Visual — a quiet visual story in a golden mountain village](docs/assets/saylef-visual-hero.png)
+SAYLEF Visual is a local-first AI-native visual creation and aesthetic intelligence engine.
 
-Local-first MVP for turning a short feeling or idea into a structured visual story task.
+The architecture is frozen as:
 
-The core is intentionally small and frozen around:
+> One Creative Core + Two Visual Domains + One Visual Intelligence System
 
-```text
-Poetic Context -> Story -> Visual Intent -> Consistency Guard -> Host Invocation Plan
-```
+The core never depends on a model provider. Painting and Photography are routed through Account DNA and Direction Engine profiles, then evaluated by the same quality pipeline.
 
-The product owns the creative logic and style constraints. The host owns image-tool execution. OpenAI, Gemini and Qwen adapters are reserved at the prompt boundary; no API key is required by this MVP.
+## Current phase
+
+Phase 7: Creative Core Runtime + Account DNA + Direction Engine + Visual Intelligence.
+
+Implemented in this phase:
+
+- Creative Core brief with emotion, poetic context, story moment, visual hook and controlled serendipity.
+- Account DNA Runtime with independent Painting and Photography profiles.
+- Direction Engine with composition, color, light, material and optional camera controls.
+- Visual Intent routing for `painting` and `photography` without changing the provider contract.
+- Painting Critic: 境 · 气 · 章 · 色 · 笔 · 事 · 格.
+- Photography Critic: Impact, Story, Composition, Light, Color, Atmosphere, Originality and Technical.
+- Visual Intelligence: Technical QA, AI Trace, Domain Critic, Style Identity, Human Preference and Quality Gate.
+- Simple / Pro UI. Simple keeps the interface compact; Pro exposes camera direction fields for Photography.
+
+Painting remains locked to high hue purity, high saturation, high brightness, low visual noise and handcrafted pigment language. Photography remains locked to natural light, honest material, believable perspective and low AI trace. Neither domain may introduce text, logos, seals, signatures or watermarks into the artwork layer.
 
 ## Run
 
-Requires Node.js 18 or newer.
-
-```powershell
-npm test
-npm run check
+```bash
+npm install
 npm run build
+npm test
+npm run smoke
 npm start
 ```
 
 Open `http://127.0.0.1:4173`.
 
-## CLI
+## Interfaces
 
-```powershell
-node src/cli.mjs --season autumn --ratio 3:4 --idea "一个关于等待的安静故事"
-```
+- Web UI: Simple / Pro creation workbench.
+- REST: `POST /api/create`.
+- CLI: `npm run cli -- ...`.
+- Agent harness: `runVisualStoryAgent()`.
+- Codex host job: `HostInvocationPlan` with an honest reserved-frame handoff.
+- API provider adapters: reserved for later; no API key or network client is required by the core.
 
-The CLI and Web UI return the same `Visual Intent` structure. The current host plan is a verified handoff description; it does not pretend that a provider image was generated when no host image tool has run.
+## Quality gates
+
+The runtime first applies the consistency guard, then evaluates Visual Intelligence. A candidate is accepted only when Technical QA, AI Trace, Domain Critic, Style Identity and Signature all pass the selected Account DNA thresholds.

@@ -6,12 +6,15 @@ const submitButton = form.querySelector('button[type="submit"]');
 const randomButton = document.querySelector("#randomize");
 const copyButton = document.querySelector("#copy-prompt");
 const copyStatus = document.querySelector("#copy-status");
+const downloadFrameButton = document.querySelector("#download-frame");
+const frameDownloadStatus = document.querySelector("#frame-download-status");
 const proFields = document.querySelector("#pro-fields");
 const domainCurrentBadge = document.querySelector("#domain-current-badge");
 const domainDescription = document.querySelector("#domain-description");
 const domainDirectoryList = document.querySelector("#domain-directory-list");
 const modeButtons = [...document.querySelectorAll("[data-mode]")];
 let currentPrompt = "";
+let currentReservedFrame = null;
 
 const domainCatalog = {
   painting: {
@@ -59,6 +62,7 @@ copyButton.addEventListener("click", async () => {
   catch { copyStatus.textContent = "复制失败"; }
   window.setTimeout(() => { copyStatus.textContent = ""; }, 1800);
 });
+downloadFrameButton.addEventListener("click", downloadReservedFrame);
 form.addEventListener("submit", (event) => { event.preventDefault(); generateStory(); });
 syncAccountForDomain();
 syncDomainDirectory();
@@ -107,6 +111,7 @@ function randomize() {
   form.elements.userIdea.value = pick(randomIdeas);
   form.elements.domain.value = pick(randomDomains);
   syncAccountForDomain();
+  syncDomainDirectory();
   form.elements.season.value = pick(randomSeasons);
   form.elements.emotionHint.value = pick(randomEmotions);
   form.elements.healingScenario.value = pick(randomHealingScenarios);
@@ -119,7 +124,7 @@ function randomize() {
 
 async function generateStory() {
   setBusy(true);
-  status.textContent = "导演编译中…";
+  status.textContent = "导演编译中";
   currentPrompt = "";
   copyButton.disabled = true;
   copyStatus.textContent = "";
@@ -180,8 +185,9 @@ function gateMarkup(gate) {
 function renderReservedFrame(payload) {
   const frame = payload.hostJob && payload.hostJob.reservedFrame;
   const card = document.querySelector("#frame-card");
-  if (!frame) { card.hidden = true; return; }
+  if (!frame) { currentReservedFrame = null; downloadFrameButton.disabled = true; card.hidden = true; return; }
   const intent = payload.intent;
+  currentReservedFrame = { intent, frame };
   const stage = document.querySelector("#frame-stage");
   stage.style.setProperty("--frame-primary", toCssColor(intent.color.primary, "#3f9a68"));
   stage.style.setProperty("--frame-accent", toCssColor(intent.color.accent, "#d84f3f"));
@@ -189,10 +195,95 @@ function renderReservedFrame(payload) {
   stage.style.aspectRatio = intent.format.ratio.replace(":", " / ");
   document.querySelector("#frame-title").textContent = frame.label;
   document.querySelector("#frame-status").textContent = "已预留 · 等待 Host 执行";
+  downloadFrameButton.disabled = false;
+  frameDownloadStatus.textContent = "";
   document.querySelector("#frame-art-title").textContent = intent.narrative.title;
   document.querySelector("#frame-art-moment").textContent = intent.narrative.moment;
   document.querySelector("#frame-note").textContent = "这是构图预留画面，不代表图像已生成。只有获得真实 artifact 后，Host 才能替换此预留。";
   card.hidden = false;
+}
+
+function downloadReservedFrame() {
+  if (!currentReservedFrame) return;
+  const { intent } = currentReservedFrame;
+  const [ratioWidth, ratioHeight] = intent.format.ratio.split(":").map(Number);
+  const width = 1200;
+  const height = Math.round(width * ratioHeight / ratioWidth);
+  const canvas = document.createElement("canvas");
+  canvas.width = width;
+  canvas.height = height;
+  const context = canvas.getContext("2d");
+  if (!context) { frameDownloadStatus.textContent = "当前浏览器不支持下载"; return; }
+
+  const colors = intent.color;
+  const base = toCssColor(colors.base, "#fffdf3");
+  const primary = toCssColor(colors.primary, "#3f9a68");
+  const accent = toCssColor(colors.accent, "#d84f3f");
+  const structure = toCssColor(colors.structure, "#1e2922");
+  const background = context.createLinearGradient(0, 0, width, height);
+  background.addColorStop(0, "#fffdf3");
+  background.addColorStop(0.54, base === "#fffdf3" ? "#eef3df" : base);
+  background.addColorStop(1, primary);
+  context.fillStyle = background;
+  context.fillRect(0, 0, width, height);
+
+  const glow = context.createRadialGradient(width * 0.52, height * 0.35, 8, width * 0.52, height * 0.35, width * 0.43);
+  glow.addColorStop(0, "rgba(255,255,245,.92)");
+  glow.addColorStop(1, "rgba(255,255,245,0)");
+  context.fillStyle = glow;
+  context.fillRect(width * 0.08, height * 0.12, width * 0.84, height * 0.54);
+
+  context.save();
+  context.globalAlpha = 0.78;
+  context.shadowColor = accent;
+  context.shadowBlur = 28;
+  context.fillStyle = accent;
+  context.beginPath();
+  context.arc(width * 0.76, height * 0.2, width * 0.16, 0, Math.PI * 2);
+  context.fill();
+  context.restore();
+
+  context.save();
+  context.globalAlpha = 0.72;
+  context.fillStyle = "rgba(255,255,245,.82)";
+  context.beginPath();
+  context.moveTo(width * 0.13 + width * 0.32, height * 0.58);
+  context.lineTo(width * 0.13 + width * 0.68, height * 0.58);
+  context.lineTo(width * 0.87, height);
+  context.lineTo(width * 0.13, height);
+  context.closePath();
+  context.fill();
+  context.restore();
+
+  context.save();
+  context.globalAlpha = 0.34;
+  const light = context.createLinearGradient(0, height * 0.48, width, height * 0.52);
+  light.addColorStop(0, "rgba(255,255,245,0)");
+  light.addColorStop(0.49, "rgba(255,255,245,1)");
+  light.addColorStop(0.5, "rgba(255,255,245,0)");
+  light.addColorStop(1, "rgba(255,255,245,0)");
+  context.fillStyle = light;
+  context.fillRect(0, 0, width, height);
+  context.restore();
+
+  context.fillStyle = structure;
+  context.textBaseline = "bottom";
+  context.font = "700 48px Segoe UI, Microsoft YaHei, sans-serif";
+  context.fillText(intent.narrative.title, width * 0.08, height * 0.9);
+  context.font = "22px Segoe UI, Microsoft YaHei, sans-serif";
+  context.globalAlpha = 0.86;
+  context.fillText(intent.narrative.moment, width * 0.08, height * 0.94);
+
+  canvas.toBlob((blob) => {
+    if (!blob) { frameDownloadStatus.textContent = "下载未成功"; return; }
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "saylef-reserved-frame-" + intent.format.ratio.replace(":", "x") + ".png";
+    link.click();
+    window.setTimeout(() => URL.revokeObjectURL(link.href), 1000);
+    frameDownloadStatus.textContent = "已下载 PNG";
+    window.setTimeout(() => { frameDownloadStatus.textContent = ""; }, 1800);
+  }, "image/png");
 }
 
 function syncPreviewRatio() { document.querySelector("#empty").style.aspectRatio = (form.elements.ratio.value || "3:4").replace(":", " / "); }

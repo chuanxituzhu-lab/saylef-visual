@@ -1,6 +1,10 @@
 # SAYLEF Visual
 
-SAYLEF Visual is a local-first AI-native visual creation and aesthetic intelligence engine.
+![SAYLEF Visual — Visual Director Workbench](docs/assets/saylef-visual-director-hero.png)
+
+> Visual Director Workbench: One Creative Core routes one story through two visual domains, while Visual Intelligence protects composition, color, material and style identity.
+
+saylef-visual is a local-first AI-native visual creation and aesthetic intelligence engine.
 
 The architecture is frozen as:
 

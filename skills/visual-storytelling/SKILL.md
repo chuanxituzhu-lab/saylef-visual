@@ -24,7 +24,7 @@ Turn a short creative intent into one restrained, story-led image. The host agen
 ## Runtime workflow
 
 1. Parse the user's intent, season, desired emotion, ratio and optional provider preference.
-2. Run the local Visual Story Studio runtime to produce Visual Intent Protocol v1.0.
+2. Run the local saylef-visual runtime to produce Visual Intent Protocol v1.0.
 3. Reject or revise any result that fails the consistency guard.
 4. Compile the provider-specific prompt.
 5. Invoke the host environment's approved image-generation capability directly.

@@ -2,7 +2,7 @@
 
 ## Decision
 
-Visual Story Studio does not require an embedded OpenAI API key for the Codex deployment path. The core runtime compiles a host-neutral image job and Codex invokes an approved image-generation capability already available in its environment.
+saylef-visual does not require an embedded OpenAI API key for the Codex deployment path. The core runtime compiles a host-neutral image job and Codex invokes an approved image-generation capability already available in its environment.
 
 ## Boundary
 

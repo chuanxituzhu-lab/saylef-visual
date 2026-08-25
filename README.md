@@ -12,6 +12,24 @@ The architecture is frozen as:
 
 The core never depends on a model provider. Painting and Photography are routed through Account DNA and Direction Engine profiles, then evaluated by the same quality pipeline.
 
+## Current release · v0.2.0
+
+This is the current development baseline for the Visual Director Workbench.
+
+Core release notes:
+
+- One Creative Core turns a short feeling into a story moment, visual hook, composition, color, light and material direction.
+- Painting and Photography use separate Account DNA profiles while sharing one Visual Intelligence quality pipeline.
+- Healing scenarios, explicit time points, pure Chinese or pure English prompts, no-text image rules, Style Drift Guard and Codex reserved-frame handoff are included.
+- The Web UI includes Simple / Pro direction, domain navigation, reserved-frame preview and download, prompt copy, and the visual intelligence scorecard.
+
+## Versioning and update policy
+
+- `VERSION` and `package.json.version` are the source of truth and must stay identical.
+- Use Semantic Versioning: patch for fixes, minor for compatible features, major for breaking architecture or contract changes. While the product is pre-1.0, feature releases advance the minor version.
+- Every release updates the version, adds a concise core note in this README, and uses a versioned commit or tag such as `v0.2.0`.
+- The README release section must explain the core user-visible change; implementation details belong in the relevant `docs/` file.
+
 ## Current phase
 
 Phase 7: Creative Core Runtime + Account DNA + Direction Engine + Visual Intelligence.
